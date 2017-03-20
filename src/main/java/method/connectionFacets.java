@@ -10,12 +10,12 @@ import org.apache.commons.io.FileUtils;
 public class connectionFacets {
 
 	public static void main(String[] args) {
-		System.out.println(facetsOfOneNode("Binary_tree"));
+		System.out.println(facetsOfOneNode("Binary_tree","Data_structure"));
 	}
 	
 	@SuppressWarnings("deprecation")
-	public static String facetsOfOneNode(String node) {
-		ArrayList<String> parentArray = FindRelationship.getRelation(node).getParentNodes();
+	public static String facetsOfOneNode(String node,String root) {
+		ArrayList<String> parentArray = FindRelationship.getRelation(node,root).getParentNodes();
 		String fString = "";
 		String facets = "\n父节点的分面有：\n";
 		HashSet<String> parentSet = new HashSet<>();
@@ -37,7 +37,7 @@ public class connectionFacets {
 			}
 		}
 		facets = facets + "\n兄弟节点的分面有：\n";
-		ArrayList<String> brotherArray = FindRelationship.getRelation(node).getBrotherNodes();
+		ArrayList<String> brotherArray = FindRelationship.getRelation(node,root).getBrotherNodes();
 		HashSet<String> brotherSet = new HashSet<>();
 		for(String str : brotherArray)
 		{
@@ -57,7 +57,7 @@ public class connectionFacets {
 			}
 		}
 		facets = facets + "\n子节点的分面有：\n";
-		ArrayList<String> childArray = FindRelationship.getRelation(node).getChildNodes();
+		ArrayList<String> childArray = FindRelationship.getRelation(node,root).getChildNodes();
 		HashSet<String> childSet = new HashSet<>();
 		for(String str : childArray)
 		{

@@ -11,11 +11,16 @@ import jxl.read.biff.BiffException;
 public class FindRelationship {
 
 	public static void main(String[] args) {
-		oneNode tarNode = getRelation("Binary_tree");
+		oneNode tarNode = getRelation("Bx-tree", "Data_structure");
 		printNode(tarNode);
 	}
 	
-	public static oneNode getRelation(String node) {
+	/**
+	 * 用于获得一个节点的兄弟，祖先，子节点，并存在一个对象中
+	 * @param node
+	 * @return oneNode类
+	 */
+	public static oneNode getRelation(String node, String root) {
 		oneNode topic = new oneNode();
 		topic.setNodeName(node);
 		Workbook wb;
@@ -33,12 +38,69 @@ public class FindRelationship {
 			e.printStackTrace();
 		}
 		
+		if (RootExist(upLocation, root))
+			topic.setLayer(findLayer(upLocation, dnLocation, node, root));
+		else System.err.println("所输入的根节点不存在。");
 		topic.setParentNodes(findParent(upLocation, dnLocation, node));
 		topic.setBrotherNodes(findBrother(upLocation, dnLocation, node));
 		topic.setChildNodes(findChild(upLocation, dnLocation, node));
 		return topic;
 	}
 
+	
+	public static boolean RootExist(ArrayList<String> upLocation, String root) {
+		boolean hasRoot = false;
+		for(String string : upLocation)
+		{
+			if (string.equals(root)) {
+				hasRoot = true;
+				break;
+			}
+		}
+		return hasRoot;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static int findLayer(ArrayList<String> upLocation, ArrayList<String> dnLocation, String node, String rootNode){
+		int layer = 0;
+		if(node.equals(rootNode)) return layer;
+		boolean findroot = false;
+		ArrayList<String> nodePre = new ArrayList<>();
+		ArrayList<String> nodeNow = new ArrayList<>();
+		HashSet<String> findedNode = new HashSet<>();
+		nodePre.add(node);
+		findedNode.add(node);
+		while(!findroot)
+		{
+			layer++;
+			for(int i = 0; i < upLocation.size(); i++)
+			{
+				for(int j = 0; j < nodePre.size(); j++)
+				{
+					if (dnLocation.get(i).equals(nodePre.get(j))) {
+						if(findedNode.contains(upLocation.get(i))){
+							continue;
+						}
+						if(upLocation.get(i).equals(rootNode)) {
+							findroot = true;
+							break;
+							}
+						else {
+							nodeNow.add(upLocation.get(i));
+							findedNode.add(upLocation.get(i));
+						}
+					}
+				}
+				if(findroot) {
+					break;
+				}
+			}
+			nodePre = (ArrayList<String>) nodeNow.clone();
+			nodeNow = new ArrayList<>();
+		}
+		return layer;
+	}
+	
 	/**
 	 * 用于找到一个特定节点node所有的祖先节点
 	 * @param upLocation 上下位关系中，上位关系那一列 
@@ -167,6 +229,8 @@ public class FindRelationship {
 	 * @return 空。
 	 */
 	public static void printNode(oneNode node) {
+		int lay = node.getLayer();
+		System.out.println("该节点在领域树中处于第" + lay + "层");
 		ArrayList<String> p = node.getParentNodes();
 		System.out.println("父节点有：");
 		for(String str : p) 
