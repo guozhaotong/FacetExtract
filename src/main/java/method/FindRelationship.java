@@ -41,7 +41,7 @@ public class FindRelationship {
 
 	/**
 	 * 用于找到一个特定节点node所有的祖先节点
-	 * @param upLocation 上下位关系中，上位关系那一列
+	 * @param upLocation 上下位关系中，上位关系那一列 
 	 * @param dnLocation 上下位关系中，下位关系那一列
 	 * @param node 目标节点
 	 * @return 所有祖先节点。
