@@ -11,7 +11,7 @@ import jxl.read.biff.BiffException;
 public class FindRelationship {
 
 	public static void main(String[] args) {
-		oneNode tarNode = getRelation("Bx-tree", "Data_structure");
+		oneNode tarNode = getRelation("Binary_tree", "Data_structure");
 		printNode(tarNode);
 	}
 	
@@ -21,8 +21,6 @@ public class FindRelationship {
 	 * @return oneNode类
 	 */
 	public static oneNode getRelation(String node, String root) {
-		oneNode topic = new oneNode();
-		topic.setNodeName(node);
 		Workbook wb;
 		ArrayList<String> upLocation = new ArrayList<>();
 		ArrayList<String> dnLocation = new ArrayList<>();
@@ -37,29 +35,106 @@ public class FindRelationship {
 		} catch (BiffException | IOException e) {
 			e.printStackTrace();
 		}
-		
-		if (RootExist(upLocation, root))
+
+		oneNode topic = new oneNode();
+		if(!NodeExist(upLocation, dnLocation, node))
+		{
+			System.err.println("所输入的节点不存在。");
+			return topic;
+		}
+		topic.setNodeName(node);
+		if (NodeExist(upLocation, dnLocation, root))
 			topic.setLayer(findLayer(upLocation, dnLocation, node, root));
-		else System.err.println("所输入的根节点不存在。");
+		else {
+			System.err.println("所输入的根节点不存在。");
+			return topic;
+		}
+		topic.setDisToLeaf(findDistToLeaf(upLocation, dnLocation, node));
 		topic.setParentNodes(findParent(upLocation, dnLocation, node));
 		topic.setBrotherNodes(findBrother(upLocation, dnLocation, node));
 		topic.setChildNodes(findChild(upLocation, dnLocation, node));
 		return topic;
 	}
 
-	
-	public static boolean RootExist(ArrayList<String> upLocation, String root) {
-		boolean hasRoot = false;
+	/**
+	 * 用于检测输入节点是否存在。
+	 * @param upLocation 上下位关系中，上位关系那一列 
+	 * @param dnLocation 上下位关系中，下位关系那一列
+	 * @param node 目标节点
+	 * @return 是否存在。
+	 */
+	public static boolean NodeExist(ArrayList<String> upLocation, ArrayList<String> dnLocation, String node) {
 		for(String string : upLocation)
-		{
-			if (string.equals(root)) {
-				hasRoot = true;
-				break;
-			}
-		}
-		return hasRoot;
+			if (string.equals(node))
+				return true;
+		for(String string : dnLocation)
+			if (string.equals(node))
+				return true;
+		return false;
 	}
 	
+	
+	/**
+	 * 用于找到一个节点在领域树中处于第几层
+	 * @param upLocation 上下位关系中，上位关系那一列 
+	 * @param dnLocation 上下位关系中，下位关系那一列
+	 * @param node 目标节点
+	 * @param rootNode 根节点
+	 * @return 层数。
+	 */
+	@SuppressWarnings("unchecked")
+	public static int findDistToLeaf(ArrayList<String> upLocation, ArrayList<String> dnLocation, String node){
+		int distToLeaf = 0;
+		if(IsLeaf(upLocation, node))
+			return distToLeaf;
+		ArrayList<String> childNodePre = new ArrayList<>();
+		HashSet<String> findedNode = new HashSet<>();
+		findedNode.add(node);
+		childNodePre.add(node);
+		while(true)
+		{
+			ArrayList<String> childNode = new ArrayList<>();
+			for(String string : childNodePre)
+			{
+				if(IsLeaf(upLocation, string))
+					return distToLeaf;
+				for(int i = 0; i < upLocation.size(); i++)
+				{
+					if(upLocation.get(i).equals(string))
+					{
+						if(!findedNode.contains(dnLocation.get(i)))
+							childNode.add(dnLocation.get(i));
+					}
+				}
+			}
+			childNodePre = (ArrayList<String>) childNode.clone();
+			childNode = new ArrayList<>();
+			distToLeaf++;
+		}
+//		return distToLeaf;
+	}
+	
+	/**
+	 * 用于判断一个节点是不是叶子节点
+	 * @param upLocation 上下位关系中，上位关系那一列
+	 * @param node 目标节点
+	 * @return 是否是叶子节点。
+	 */
+	public static boolean IsLeaf(ArrayList<String> upLocation, String node) {
+		for(String string : upLocation)
+			if (string.equals(node))
+				return false;
+		return true;
+	}
+	
+	/**
+	 * 用于找到一个节点在领域树中处于第几层
+	 * @param upLocation 上下位关系中，上位关系那一列 
+	 * @param dnLocation 上下位关系中，下位关系那一列
+	 * @param node 目标节点
+	 * @param rootNode 根节点
+	 * @return 层数。
+	 */
 	@SuppressWarnings("unchecked")
 	public static int findLayer(ArrayList<String> upLocation, ArrayList<String> dnLocation, String node, String rootNode){
 		int layer = 0;
@@ -230,7 +305,8 @@ public class FindRelationship {
 	 */
 	public static void printNode(oneNode node) {
 		int lay = node.getLayer();
-		System.out.println("该节点在领域树中处于第" + lay + "层");
+		int dis = node.getDisToLeaf();
+		System.out.println("该节点在领域树中处于第" + lay + "层，距离叶子节点还有" + dis + "层");
 		ArrayList<String> p = node.getParentNodes();
 		System.out.println("父节点有：");
 		for(String str : p) 
