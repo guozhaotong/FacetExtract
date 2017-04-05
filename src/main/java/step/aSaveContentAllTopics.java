@@ -10,6 +10,7 @@ import jxl.Sheet;
 import jxl.Workbook;
 import jxl.read.biff.BiffException;
 
+import org.apache.commons.io.FileUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -20,10 +21,11 @@ public class aSaveContentAllTopics
 
 	public static void main(String[] args) throws BiffException, IOException 
 	{
-		String oriPath = "E:\\我是研究生\\任务\\分面树的生成\\Content\\";
+		String oriPath = "M:\\Data mining data set\\Content\\";
 		SaveContantAllTopics(oriPath);
 	}
 	
+	@SuppressWarnings("deprecation")
 	public static void SaveContantAllTopics(String oriPath) throws BiffException, IOException
 	{
 		File dirfile =new File(oriPath + "1_origin");    
@@ -32,13 +34,13 @@ public class aSaveContentAllTopics
 		    dirfile .mkdir();    
 		} 
 		String dirPath = oriPath + "1_origin\\";
-		Workbook wb = Workbook.getWorkbook(new File("E:\\我是研究生\\任务\\分面树的生成\\Mooc\\Data_structure_topics.xls"));
-		Sheet sheet = wb.getSheet(0); // get sheet(0)
-		System.out.println("共有" + sheet.getRows() + "个术语");
-		for (int i = 0; i < sheet.getRows(); i++)
+		String topics = FileUtils.readFileToString(new File("M:\\Data mining data set\\topic.txt"));
+		String[] topic = topics.split("\n");
+		System.out.println("共有" + topic.length + "个术语");
+		for (int i = 0; i < topic.length; i++)
 		{
-			System.out.println("Save content\t" + i + "\t" + sheet.getCell(0, i).getContents());
-			wiki(dirPath,sheet.getCell(0, i).getContents());
+			System.out.println("Save content\t" + i + "\t" + topic[i]);
+			wiki(dirPath,topic[i]);
 		}
 		System.out.println("Done.");
 	}
@@ -62,39 +64,64 @@ public class aSaveContentAllTopics
 		}
 	}
 
-	public static void wiki(String dirPath, String word) throws IOException
+	public static void wiki(String dirPath, String word)
 	{
-		Document doc = Jsoup.connect("https://en.wikipedia.org/wiki/" + word).timeout(100000).get();
-		Elements element_title = doc.select("#toc > ul > li");
-		if (element_title.size() == 0)
-		{
+		File dirfile =new File(dirPath + "1");    
+		if  (!dirfile .exists()  && !dirfile .isDirectory())      
+		{       
+		    dirfile .mkdir();    
+		} 
+		dirfile =new File(dirPath + "2");    
+		if  (!dirfile .exists()  && !dirfile .isDirectory())      
+		{       
+		    dirfile .mkdir();    
+		} 
+		dirfile =new File(dirPath + "3");    
+		if  (!dirfile .exists()  && !dirfile .isDirectory())      
+		{       
+		    dirfile .mkdir();    
+		} 
+		Document doc = null;
+		try {
+			doc = Jsoup.connect("https://en.wikipedia.org/wiki/" + word).timeout(100000).get();
+			Elements element_title = doc.select("#toc > ul > li");
+			if (element_title.size() == 0)
+			{
+				System.out.println("没有content.");
+				writetxt(dirPath + "1\\" + word + ".txt", "\n");
+				writetxt(dirPath + "2\\" + word + ".txt", "\n");
+				writetxt(dirPath + "3\\" + word + ".txt", "\n");
+			}
+			for (Element ele : element_title)
+			{
+				writetxt(dirPath + "1\\" + word + ".txt", ele.select("a> span.toctext").first().text() + "\n");
+				writetxt(dirPath + "2\\" + word + ".txt", ele.select("a> span.toctext").first().text() + "\n");
+				writetxt(dirPath + "3\\" + word + ".txt", ele.select("a> span.toctext").first().text() + "\n");
+				if (ele.select("ul").size() >= 1)
+				{
+					Elements ele_child = ele.select("ul >li.toclevel-2");
+					for (Element element : ele_child)
+					{
+						writetxt(dirPath + "2\\" + word + ".txt", "***** " + element.select("a> span.toctext").first().text() + "\n");
+						writetxt(dirPath + "3\\" + word + ".txt", "***** " + element.select("a> span.toctext").first().text() + "\n");
+						if (element.select("ul").size() >= 1)
+						{
+							Elements ele_grandson = element.select("ul >li.toclevel-3");
+							for (Element elementson : ele_grandson)
+							{
+								writetxt(dirPath + "3\\" + word + ".txt", "########## " + elementson.select("a > span.toctext").first().text() + "\n");
+							}
+						}
+					}
+				}
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
 			System.out.println("没有content.");
 			writetxt(dirPath + "1\\" + word + ".txt", "\n");
 			writetxt(dirPath + "2\\" + word + ".txt", "\n");
 			writetxt(dirPath + "3\\" + word + ".txt", "\n");
 		}
-		for (Element ele : element_title)
-		{
-			writetxt(dirPath + "1\\" + word + ".txt", ele.select("a> span.toctext").first().text() + "\n");
-			writetxt(dirPath + "2\\" + word + ".txt", ele.select("a> span.toctext").first().text() + "\n");
-			writetxt(dirPath + "3\\" + word + ".txt", ele.select("a> span.toctext").first().text() + "\n");
-			if (ele.select("ul").size() >= 1)
-			{
-				Elements ele_child = ele.select("ul >li.toclevel-2");
-				for (Element element : ele_child)
-				{
-					writetxt(dirPath + "2\\" + word + ".txt", "*****" + element.select("a> span.toctext").first().text() + "\n");
-					writetxt(dirPath + "3\\" + word + ".txt", "*****" + element.select("a> span.toctext").first().text() + "\n");
-					if (element.select("ul").size() >= 1)
-					{
-						Elements ele_grandson = element.select("ul >li.toclevel-3");
-						for (Element elementson : ele_grandson)
-						{
-							writetxt(dirPath + "3\\" + word + ".txt", "##########" + elementson.select("a > span.toctext").first().text() + "\n");
-						}
-					}
-				}
-			}
-		}
+		
 	}
 }

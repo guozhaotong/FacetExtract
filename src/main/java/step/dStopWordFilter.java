@@ -11,10 +11,11 @@ public class dStopWordFilter
 {
 	public static void main(String[] args) throws IOException
 	{
-		String oriPath = "E:\\我是研究生\\任务\\分面树的生成\\Content\\";
+		String oriPath = "M:\\Data mining data set\\Content\\";
 		StopWordFilter(oriPath);
 	}
 	
+	@SuppressWarnings("deprecation")
 	public static void StopWordFilter(String oriPath) throws IOException
     {
 		File dirfile =new File(oriPath + "4_stopWordFilter");    

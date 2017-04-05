@@ -17,13 +17,12 @@ public class gLayerMerge
 
 	public static void main(String[] args)
 	{
-		String oriPath = "E:\\我是研究生\\任务\\分面树的生成\\Content\\";
+		String oriPath = "M:\\Data mining data set\\Content\\";
 		try
 		{
 			readExcel(oriPath);
 		} catch (BiffException | IOException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		System.out.println("Done.");

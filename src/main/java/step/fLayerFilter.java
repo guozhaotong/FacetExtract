@@ -15,7 +15,7 @@ public class fLayerFilter
 {
 	public static void main(String[] args) throws Exception
 	{
-		String oriPath = "E:\\我是研究生\\任务\\分面树的生成\\Content\\";
+		String oriPath = "M:\\Data mining data set\\Content\\";
 		LayerFilterFilter(oriPath);
 	}
 	
@@ -45,7 +45,7 @@ public class fLayerFilter
 		{       
 		    file .mkdir();    
 		} 
-		Workbook wb = Workbook.getWorkbook(new File(oriPath + "otherFiles\\数据结构上下位关系-filter.xls"));
+		Workbook wb = Workbook.getWorkbook(new File("M:\\Data mining data set\\Data mining上下位.xls"));
 		Sheet sheet = wb.getSheet(0); // get sheet(0)
 		HashSet<String> set=new HashSet<String>();
 		for (int i = 1; i < sheet.getRows(); i++)

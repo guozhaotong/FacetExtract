@@ -14,7 +14,7 @@ public class eTopicNameFilter
 {
 	public static void main(String[] args) throws IOException, BiffException
 	{
-        String oriPath = "E:\\我是研究生\\任务\\分面树的生成\\Content\\";
+        String oriPath = "M:\\Data mining data set\\Content\\";
 		TopicNameFilter(oriPath);
 	}
 	
@@ -31,21 +31,22 @@ public class eTopicNameFilter
 			File file =new File(oriPath + "5_topicNameFilter\\" + order);    
 			if  (!file .exists()  && !file .isDirectory())      
 			{       
-			    file .mkdir();    
+			    file.mkdir();    
 			} 
 			String InputFilePath = oriPath + "4_stopWordFilter\\" + order + "\\";
 			String OutputFilePath = oriPath + "5_topicNameFilter\\" + order + "\\";
-			String topicWordPath = "E:\\我是研究生\\任务\\分面树的生成\\Content\\otherFiles\\Data_structure_topics_filter.xls";
-			String[] topicWords = new String[2000];
-			Workbook wb=Workbook.getWorkbook(new File(topicWordPath));
-			Sheet sheet = wb.getSheet(0); //get sheet(0)
-			int i=0;
-			for(i=0; i<sheet.getRows(); i++)
-			{
-				topicWords[i] = sheet.getCell(0,i).getContents();
-			}
-			topicWords[i++] = "terminology";
-			topicWords[i++] = "improvemants";
+			String topicWordPath = "M:\\Data mining data set\\topic.txt";
+			String[] topicWords = FileUtils.readFileToString(new File(topicWordPath)).toLowerCase().split("\n");
+//			String[] topicWords = new String[2000];
+//			Workbook wb=Workbook.getWorkbook(new File(topicWordPath));
+//			Sheet sheet = wb.getSheet(0); //get sheet(0)
+//			int i=0;
+//			for(i=0; i<sheet.getRows(); i++)
+//			{
+//				topicWords[i] = sheet.getCell(0,i).getContents();
+//			}
+//			topicWords[i++] = "terminology";
+//			topicWords[i++] = "improvemants";
 			String [] fileName = new File(InputFilePath).list();
 	        for(String name:fileName)
 	        {
@@ -79,9 +80,9 @@ public class eTopicNameFilter
 	    			else if(lineString.contains("##########") && lineString.replaceAll("##########", "").trim().equals(layer2))
 	    				continue;
 	    			//进行停用词的消除
-	    			for (int No = 0; No < i; No++)
+	    			for (String s : topicWords)
 					{
-	    				lineString = lineString.replaceAll(topicWords[No], "");
+	    				lineString = lineString.replaceAll(s, "");
 	    				if(lineString.trim().equals(""))
 	    					facet1 = 0;
 	    				else if(lineString.trim().equals("*****"))

@@ -14,7 +14,7 @@ public class hGiveInstinctiveFacets
 
 	public static void main(String[] args)
 	{
-		String oriPath = "M:\\我是研究生\\任务\\分面树的生成\\Facet\\";
+		String oriPath = "M:\\Data mining data set\\Content\\";
 		try
 		{
 			readExcel(oriPath);

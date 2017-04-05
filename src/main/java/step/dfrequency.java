@@ -19,7 +19,7 @@ public class dfrequency
 
 	public static void main(String[] args) throws IOException
 	{
-		String oriPath = "E:\\我是研究生\\任务\\分面树的生成\\Content\\";
+		String oriPath = "M:\\Data mining data set\\Content\\";
 		int threshold = 3;							//设置一个阈值，当单词出现次数大于这个阈值时，就被保留下来，否则当做停用词去掉。
 		Frequency(oriPath + "3_pluralFilter\\", threshold);
 	}
