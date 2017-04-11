@@ -1,15 +1,13 @@
 package method;
-//用来找到一个节点的父节点的分面，子节点的分面，和兄弟节点的分面。
+//用来找到一个节点兄弟节点的分面。
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
 
 import org.apache.commons.io.FileUtils;
@@ -20,7 +18,7 @@ public class brotherFacets {
 	
 	public static void main(String[] args) {
 //		System.out.println(facetsOfOneNode("Binary_tree"));
-		allBrotherFacet("Data_structure");
+		allBrotherFacet("Data_mining");
 		System.out.println("done.");
 	}
 	
@@ -28,26 +26,23 @@ public class brotherFacets {
 	public static void allBrotherFacet(String root) {
 		File dirfile =new File(oriPath + "complementation\\brother");    
 		if  (!dirfile .exists()  && !dirfile .isDirectory())      
-		{
 		    dirfile .mkdir();
-		}
 		String [] fileName = new File(InputFilePath).list();
 //		System.out.println(fileName);
 		for(String name : fileName)
 		{
 			name = name.replaceAll(".txt", "");
-			String cont = name + "(" + FindRelationship.getRelation(name, root).getLayer() + ")"
-					+ "(" + FindRelationship.getRelation(name, root).getDisToLeaf() + "):\n"
+			String cont = name + "(" + FindRelationship.getRelation(name, root,oriPath).getLayer() + ")"
+					+ "(" + FindRelationship.getRelation(name, root, oriPath).getDisToLeaf() + "):\n"
 					+ facetsOfOneNode(name) + "\n";
 			System.out.println(name);
 			ArrayList<String> brother = new ArrayList<>();
-			brother = FindRelationship.getRelation(name,root).getBrotherNodes();
+			brother = FindRelationship.getRelation(name,root,oriPath).getBrotherNodes();
 			String allParentNode = "";
-			@SuppressWarnings({ "unchecked", "rawtypes" })
-			HashMap<String,Integer> brotherFacet = new HashMap();
+			HashMap<String,Integer> brotherFacet = new HashMap<>();
 			for(String parentNode : brother)
 			{
-				cont = cont + parentNode + "(" + FindRelationship.getRelation(parentNode, root).getLayer() + "):\n"
+				cont = cont + parentNode + "(" + FindRelationship.getRelation(parentNode, root, oriPath).getLayer() + "):\n"
 					 + facetsOfOneNode(parentNode) + "\n";
 				allParentNode = allParentNode + facetsOfOneNode(parentNode).replaceAll("\t", "");
 			}
@@ -65,6 +60,21 @@ public class brotherFacets {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	public static HashMap<String, Integer> getTopicsFacets(ArrayList<String> brother) {
+		HashMap<String,Integer> brotherFacet = new HashMap<>();
+		String allParentNode = "";
+		for(String parentNode : brother)
+			allParentNode = allParentNode + facetsOfOneNode(parentNode).replaceAll("\t", "");
+		for(String f : allParentNode.split("\n"))
+		{
+			if (brotherFacet.containsKey(f)) 
+				brotherFacet.put(f, brotherFacet.get(f) + 1);  
+            else 
+            	brotherFacet.put(f, 1);
+		}
+		return brotherFacet;
 	}
 	
 	public static String facetsOfOneNode(String node) {

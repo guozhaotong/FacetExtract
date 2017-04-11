@@ -11,7 +11,7 @@ import jxl.read.biff.BiffException;
 public class FindRelationship {
 
 	public static void main(String[] args) {
-		oneNode tarNode = getRelation("Binary_tree", "Data_structure");
+		oneNode tarNode = getRelation("Binary_tree", "Data_structure","M:\\Data mining data set\\");
 		printNode(tarNode);
 	}
 	
@@ -20,12 +20,12 @@ public class FindRelationship {
 	 * @param node
 	 * @return oneNode类
 	 */
-	public static oneNode getRelation(String node, String root) {
+	public static oneNode getRelation(String node, String root, String oriPath) {
 		Workbook wb;
 		ArrayList<String> upLocation = new ArrayList<>();
 		ArrayList<String> dnLocation = new ArrayList<>();
 		try {//把excel里面的内容存到内存中
-			wb = Workbook.getWorkbook(new File("M:\\我是研究生\\任务\\分面树的生成\\Mooc\\上下位关系\\数据结构上下位关系-新构建.xls"));
+			wb = Workbook.getWorkbook(new File(oriPath + "otherFiles\\Data structure上下位.xls"));
 			Sheet sheet = wb.getSheet(0); //get sheet(0)
 			for(int i = 1; i < sheet.getRows(); i++)
 			{
@@ -277,7 +277,8 @@ public class FindRelationship {
 	 * @param node 目标节点
 	 * @return 所有兄弟节点。
 	 */
-	public static ArrayList<String> findBrother(ArrayList<String> upLocation, ArrayList<String> dnLocation, String node){
+	public static ArrayList<String> findBrother(ArrayList<String> upLocation, ArrayList<String> dnLocation, 
+			String node){
 		ArrayList<String> directParent = new ArrayList<>();//亲父节点
 		for(int i = 0; i < upLocation.size(); i++)
 		{

@@ -22,16 +22,16 @@ public class topicExtract {
 	@SuppressWarnings("deprecation")
 	public static void main(String[] args) {
 		HashSet<String> finalTopic = getTopic();
-//		String cont = "";
-//		for(String string : finalTopic)
-//		{
-//			cont = cont + string + "\n";
-//		}
-//		try {
-//			FileUtils.write(new File("M:\\test.txt"), cont);
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
+		String cont = "";
+		for(String string : finalTopic)
+		{
+			cont = cont + string + "\n";
+		}
+		try {
+			FileUtils.write(new File("M:\\test.txt"), cont);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@SuppressWarnings("unchecked")
@@ -40,8 +40,8 @@ public class topicExtract {
 		ArrayList<String> nextCycle = new ArrayList<>();
 		ArrayList<String> upLocation = new ArrayList<>();
 		ArrayList<String> dnLocation = new ArrayList<>();
-		dataMiningTopic.add("Data_mining");
-		nextCycle.add("Data_mining");
+		dataMiningTopic.add("Computer_networks");
+		nextCycle.add("Computer_networks");
 		while(nextCycle.size() > 0)
 		{
 			ArrayList<String> nextCycleTopic = new ArrayList<>();
@@ -87,7 +87,7 @@ public class topicExtract {
 	public static void writeExcel(ArrayList<String> upLocation, ArrayList<String> dnLocation) {
 		WritableWorkbook wwb;
 		try {
-			wwb = Workbook.createWorkbook(new File("M:\\Data mining上下位.xls"));
+			wwb = Workbook.createWorkbook(new File("M:\\Computer networks上下位.xls"));
 	        WritableSheet ws = wwb.createSheet("sheet1", 0);
 	        Label labelC = new Label(0, 0, "下位"); 
             try {
