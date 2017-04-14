@@ -16,6 +16,7 @@ public class bUselessFilter
 		UselessFilter(oriPath);
 	}
 	
+	@SuppressWarnings("deprecation")
 	public static void UselessFilter(String oriPath) throws IOException
     {
 		String[] prep = {"of","for","at","in","on","over","with","to","by","about","under","after"};

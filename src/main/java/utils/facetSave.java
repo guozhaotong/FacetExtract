@@ -1,4 +1,5 @@
 package utils;
+//把分面信息存到数据库。
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;

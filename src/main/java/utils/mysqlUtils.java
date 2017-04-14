@@ -26,7 +26,7 @@ public class mysqlUtils
     //加载驱动
     private final String DRIVER = "com.mysql.jdbc.Driver";
     //设置url等参数
-    private final String URL = "jdbc:mysql://202.117.54.81:3306/tong?user=root&password=tong&useUnicode=true&characterEncoding=utf-8";
+    private final String URL = "jdbc:mysql://localhost:3306/facetextraction?user=root&password=root&useUnicode=true&characterEncoding=utf-8";
     //定义数据库的连接
     private Connection connection;
     //定义sql语句的执行对象

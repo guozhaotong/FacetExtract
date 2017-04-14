@@ -1,4 +1,4 @@
-package step;
+package newStep;
 //用于消除停用词，并把空行给消除掉，把一级标题不存在的二级标题也消除掉
 import java.io.BufferedReader;
 import java.io.File;

@@ -1,4 +1,4 @@
-package step;
+package newStep;
 //用于统计一个文件夹下面所有的TXT文件中单词的出现频率
 import java.io.BufferedReader;
 import java.io.File;

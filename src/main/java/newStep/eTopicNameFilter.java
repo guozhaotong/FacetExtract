@@ -1,4 +1,4 @@
-package step;
+package newStep;
 //把主题词语去掉，比如有一个主题叫array，就把分面中出现的所有array都去掉。
 import java.io.BufferedReader;
 import java.io.File;

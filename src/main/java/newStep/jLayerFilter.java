@@ -1,4 +1,4 @@
-package step;
+package newStep;
 //用于把只有一个下级标题的去掉，这样一个标题不会只有一个下级标题
 import java.io.BufferedReader;
 import java.io.File;
@@ -11,42 +11,41 @@ import org.apache.commons.io.FileUtils;
 import jxl.Sheet;
 import jxl.Workbook;
 
-public class fLayerFilter
+public class jLayerFilter
 {
 	public static void main(String[] args) throws Exception
 	{
-		String oriPath = "M:\\Data mining data set\\Content\\";
+		String oriPath = "E:\\我是研究生\\任务\\分面树的生成\\Content\\";
 		LayerFilterFilter(oriPath);
 	}
 	
-	@SuppressWarnings("deprecation")
 	public static void LayerFilterFilter(String oriPath) throws IOException, FileNotFoundException, Exception
 	{
-		File dirfile =new File(oriPath + "6_layerFilter\\");    
+		File dirfile =new File(oriPath + "10_layerFilter\\");    
 		if  (!dirfile .exists()  && !dirfile .isDirectory())      
 		{       
 		    dirfile .mkdir();    
 		} 
-		String [] fileName = new File(oriPath + "5_topicNameFilter\\1\\").list();
+		String [] fileName = new File(oriPath + "9_deduplication\\txt\\1\\").list();
 		for(int order = 1; order <= 3; order++)
 		{
-			File file =new File(oriPath + "6_layerFilter\\" + order);    
+			File file =new File(oriPath + "10_layerFilter\\" + order);    
 			if  (!file .exists()  && !file .isDirectory())      
 			{       
 			    file .mkdir();    
 			} 
 		}
-		File file =new File(oriPath + "6_layerFilter\\3-1");    
+		File file =new File(oriPath + "10_layerFilter\\3-1");    
 		if  (!file .exists()  && !file .isDirectory())      
 		{       
 		    file .mkdir();    
 		} 
-		file =new File(oriPath + "6_layerFilter\\3-2");    
+		file =new File(oriPath + "10_layerFilter\\3-2");    
 		if  (!file .exists()  && !file .isDirectory())      
 		{       
 		    file .mkdir();    
 		} 
-		Workbook wb = Workbook.getWorkbook(new File("M:\\Data mining data set\\Data mining上下位.xls"));
+		Workbook wb = Workbook.getWorkbook(new File(oriPath + "otherFiles\\数据结构上下位关系-filter.xls"));
 		Sheet sheet = wb.getSheet(0); // get sheet(0)
 		HashSet<String> set=new HashSet<String>();
 		for (int i = 1; i < sheet.getRows(); i++)
@@ -58,7 +57,7 @@ public class fLayerFilter
 		{
         	System.out.println("LayerFilter\t" + name);
 			/***********************处理文件夹1************************/
-        	BufferedReader BR=new BufferedReader(new InputStreamReader(new FileInputStream(oriPath + "5_topicNameFilter\\1\\" + name),"UTF-8"));
+        	BufferedReader BR=new BufferedReader(new InputStreamReader(new FileInputStream(oriPath + "9_deduplication\\txt\\1\\" + name),"UTF-8"));
     		String lineString="";  //接收一行
 			String txtCont = "";
     		while (   (lineString=BR.readLine()  )!=null ) 
@@ -66,18 +65,18 @@ public class fLayerFilter
     			txtCont = txtCont + lineString + "\n";
     		}
     		BR.close();
-//        	if(set.contains(name.replaceAll(".txt", "")))
-//        	{
-//        		if(!txtCont.contains("type\n"))
-//        			txtCont = "type\n" + txtCont;
-//        	}
-//    		if(!txtCont.contains("property\n"))
-//    			txtCont = "property\n" + txtCont;
-//    		if(!txtCont.contains("definition\n"))
-//    			txtCont = "definition\n" + txtCont;
-			FileUtils.write(new File(oriPath + "6_layerFilter\\1\\" + name), txtCont);
+        	if(set.contains(name.replaceAll(".txt", "")))
+        	{
+        		if(!txtCont.contains("type\n"))
+        			txtCont = "type\n" + txtCont;
+        	}
+    		if(!txtCont.contains("property\n"))
+    			txtCont = "property\n" + txtCont;
+    		if(!txtCont.contains("definition\n"))
+    			txtCont = "definition\n" + txtCont;
+			FileUtils.write(new File(oriPath + "10_layerFilter\\1\\" + name), txtCont);
 			/***********************处理文件夹2************************/
-        	BR=new BufferedReader(new InputStreamReader(new FileInputStream(oriPath + "5_topicNameFilter\\2\\" + name),"UTF-8"));
+        	BR=new BufferedReader(new InputStreamReader(new FileInputStream(oriPath + "9_deduplication\\txt\\2\\" + name),"UTF-8"));
     		lineString="";  //接收一行
 			txtCont = "";
 			String layer2 = "";
@@ -101,19 +100,19 @@ public class fLayerFilter
 				}
     		}
     		BR.close();
-//        	if(set.contains(name.replaceAll(".txt", "")))
-//        	{
-//        		if(!txtCont.contains("type\n"))
-//        			txtCont = "type\n" + txtCont;
-//        	}
-//    		if(!txtCont.contains("property\n"))
-//    			txtCont = "property\n" + txtCont;
-//    		if(!txtCont.contains("definition\n"))
-//    			txtCont = "definition\n" + txtCont;
-			FileUtils.write(new File(oriPath + "6_layerFilter\\2\\" + name), txtCont);
+        	if(set.contains(name.replaceAll(".txt", "")))
+        	{
+        		if(!txtCont.contains("type\n"))
+        			txtCont = "type\n" + txtCont;
+        	}
+    		if(!txtCont.contains("property\n"))
+    			txtCont = "property\n" + txtCont;
+    		if(!txtCont.contains("definition\n"))
+    			txtCont = "definition\n" + txtCont;
+			FileUtils.write(new File(oriPath + "10_layerFilter\\2\\" + name), txtCont);
 			/***********************处理文件夹3************************/
 			//去二级下面只有一个的三级
-			BR=new BufferedReader(new InputStreamReader(new FileInputStream(oriPath + "5_topicNameFilter\\3\\" + name),"UTF-8"));
+			BR=new BufferedReader(new InputStreamReader(new FileInputStream(oriPath + "9_deduplication\\txt\\3\\" + name),"UTF-8"));
     		lineString="";  //接收一行
 			txtCont = "";
 			layer2 = "";
@@ -143,9 +142,9 @@ public class fLayerFilter
 				}
     		}
     		BR.close();
-			FileUtils.write(new File(oriPath + "6_layerFilter\\3-1\\" + name), txtCont.trim());
+			FileUtils.write(new File(oriPath + "10_layerFilter\\3-1\\" + name), txtCont.trim());
 			
-			BR=new BufferedReader(new InputStreamReader(new FileInputStream(oriPath + "6_layerFilter\\3-1\\" + name),"UTF-8"));
+			BR=new BufferedReader(new InputStreamReader(new FileInputStream(oriPath + "10_layerFilter\\3-1\\" + name),"UTF-8"));
     		lineString="";  //接收一行
 			txtCont = "";
 			layer3 = "";
@@ -179,9 +178,9 @@ public class fLayerFilter
 				}
     		}
     		BR.close();
-			FileUtils.write(new File(oriPath + "6_layerFilter\\3-2\\" + name), txtCont.trim());
+			FileUtils.write(new File(oriPath + "10_layerFilter\\3-2\\" + name), txtCont.trim());
 			
-			BR=new BufferedReader(new InputStreamReader(new FileInputStream(oriPath + "6_layerFilter\\3-2\\" + name),"UTF-8"));
+			BR=new BufferedReader(new InputStreamReader(new FileInputStream(oriPath + "10_layerFilter\\3-2\\" + name),"UTF-8"));
 			lineString="";  //接收一行
 			txtCont = "";
     		while (   (lineString=BR.readLine()  )!=null ) 
@@ -213,19 +212,19 @@ public class fLayerFilter
 				}
     		}
     		BR.close();
-//        	if(set.contains(name.replaceAll(".txt", "")))
-//        	{
-//        		if(!txtCont.contains("type\n"))
-//        			txtCont = "type\n" + txtCont;
-//        	}
-//    		if(!txtCont.contains("property\n"))
-//    			txtCont = "property\n" + txtCont;
-//    		if(!txtCont.contains("definition\n"))
-//    			txtCont = "definition\n" + txtCont;
-			FileUtils.write(new File(oriPath + "6_layerFilter\\3\\" + name), txtCont);
+        	if(set.contains(name.replaceAll(".txt", "")))
+        	{
+        		if(!txtCont.contains("type\n"))
+        			txtCont = "type\n" + txtCont;
+        	}
+    		if(!txtCont.contains("property\n"))
+    			txtCont = "property\n" + txtCont;
+    		if(!txtCont.contains("definition\n"))
+    			txtCont = "definition\n" + txtCont;
+			FileUtils.write(new File(oriPath + "10_layerFilter\\3\\" + name), txtCont);
 		}
-		deleDirectory(oriPath + "6_layerFilter\\3-1");
-		deleDirectory(oriPath + "6_layerFilter\\3-2");
+		deleDirectory(oriPath + "10_layerFilter\\3-1");
+		deleDirectory(oriPath + "10_layerFilter\\3-2");
         System.out.println("Done.");
 	}
 	

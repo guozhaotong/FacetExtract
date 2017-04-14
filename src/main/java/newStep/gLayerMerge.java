@@ -1,4 +1,4 @@
-package step;
+package newStep;
 //根据分面的上下位关系表，识别出现的下位和上位之间的关系，还没有实现出现的两个下位加上上位的。
 import java.io.BufferedReader;
 import java.io.File;

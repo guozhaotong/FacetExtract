@@ -1,28 +1,27 @@
 package method;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Collections;  
-import java.util.Comparator;  
-import java.util.Map.Entry;
-
-import step.iInherit;  
 
 public class test {
 
 	public static void main(String[] args) {
-		sureAndCand s = iInherit.InheritFromBrothers("Binary_tree", "M:\\我是研究生\\任务\\分面树的生成\\Facet\\", 
-				"Data_structure");
-		HashSet<String> sure = s.getSureFacet();
-		HashSet<String> cand = s.getCandFacet();
-		System.out.println("sure:");
-		System.out.println(sure);
-		System.out.println("cand:");
-		System.out.println(cand);
+		List<String> list = new ArrayList<String>();
+		list.add("1");
+		list.add("2");
+		list.add("3");
+		list.add("4");
+		list.add("5");
+		list.add("6");
+		for(int i = 0; i < list.size(); i++)
+		{
+			for(int j = 1; j < 3; j++)
+			{
+				if(list.get(i).contains(j + ""))
+					list.remove(i);
+			}
+		}
+		System.out.println(list);
+		
 	}
-	
-
 }

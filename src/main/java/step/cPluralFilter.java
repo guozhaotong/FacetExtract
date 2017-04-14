@@ -18,6 +18,7 @@ public class cPluralFilter
 		PluralFilter(oriPath);
 	}
 	
+	@SuppressWarnings("deprecation")
 	public static void PluralFilter(String oriPath) throws IOException
     {
 		File dirfile =new File(oriPath + "3_pluralFilter");    
