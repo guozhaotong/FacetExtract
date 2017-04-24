@@ -1,19 +1,21 @@
 package method;
 //用来找到一个节点的祖先节点、孩子节点、兄弟节点。
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashSet;
+
 import jxl.Sheet;
 import jxl.Workbook;
 import jxl.read.biff.BiffException;
 import model.oneNode;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashSet;
+
 public class FindRelationship {
 
 	public static void main(String[] args) {
-		oneNode tarNode = getRelation("Binary_tree", "Data_structure","M:\\Data mining data set\\");
-		printNode(tarNode);
+        oneNode tarNode = getRelation("Binary_tree", "Data_structure", "M:\\我是研究生\\任务\\分面树的生成\\Facet\\");
+        printNode(tarNode);
 	}
 	
 	/**
@@ -26,8 +28,8 @@ public class FindRelationship {
 		ArrayList<String> upLocation = new ArrayList<>();
 		ArrayList<String> dnLocation = new ArrayList<>();
 		try {//把excel里面的内容存到内存中
-			wb = Workbook.getWorkbook(new File(oriPath + "otherFiles\\Data structure上下位.xls"));
-			Sheet sheet = wb.getSheet(0); //get sheet(0)
+            wb = Workbook.getWorkbook(new File(oriPath + "otherFiles\\" + root + "上下位.xls"));
+            Sheet sheet = wb.getSheet(0); //get sheet(0)
 			for(int i = 1; i < sheet.getRows(); i++)
 			{
 				dnLocation.add(sheet.getCell(0,i).getContents());
@@ -76,11 +78,10 @@ public class FindRelationship {
 	
 	
 	/**
-	 * 用于找到一个节点在领域树中处于第几层
-	 * @param upLocation 上下位关系中，上位关系那一列 
+     * 用于找到一个节点在领域树中距离叶子节点还有几层
+     * @param upLocation 上下位关系中，上位关系那一列
 	 * @param dnLocation 上下位关系中，下位关系那一列
 	 * @param node 目标节点
-	 * @param rootNode 根节点
 	 * @return 层数。
 	 */
 	@SuppressWarnings("unchecked")
@@ -300,8 +301,6 @@ public class FindRelationship {
 	
 	/**
 	 * 用于输出一个节点所有的兄弟节点，孩子节点，祖先节点
-	 * @param upLocation 上下位关系中，上位关系那一列
-	 * @param dnLocation 上下位关系中，下位关系那一列
 	 * @param node 目标节点
 	 * @return 空。
 	 */

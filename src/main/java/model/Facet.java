@@ -32,6 +32,22 @@ public class Facet {
 	public void setNextFacets(List<Facet> nextFacets) {
 		this.nextFacets = nextFacets;
 	}
-	
-	
+
+    public Facet(String name, List<Facet> nextFacets) {
+        this.name = name;
+        this.nextFacets = nextFacets;
+    }
+
+    public String toString() {
+        String s = name + "\n";
+        for (Facet f : nextFacets) {
+            s = s + "    " + f.getName() + "\n";
+            if (f.getNextFacets().size() > 0) {
+                for (Facet f2 : f.getNextFacets()) {
+                    s = s + "        " + f2.getName() + "\n";
+                }
+            }
+        }
+        return s.trim();
+    }
 }

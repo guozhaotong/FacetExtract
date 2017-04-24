@@ -1,27 +1,29 @@
 package method;
 
-import java.util.ArrayList;
-import java.util.List;
+import model.Topic;
 
 public class test {
 
 	public static void main(String[] args) {
-		List<String> list = new ArrayList<String>();
-		list.add("1");
-		list.add("2");
-		list.add("3");
-		list.add("4");
-		list.add("5");
-		list.add("6");
-		for(int i = 0; i < list.size(); i++)
-		{
-			for(int j = 1; j < 3; j++)
-			{
-				if(list.get(i).contains(j + ""))
-					list.remove(i);
-			}
-		}
-		System.out.println(list);
-		
+//		Topic dataStructure = TxtToObject.SaveTxtToObj("M:\\我是研究生\\任务\\分面树的生成\\Facet\\5_giveInstinctiveFacets\\" +
+//				"Data_structure.txt");
+//		System.out.println(dataStructure.toString());
+//		Topic Tree = TxtToObject.SaveTxtToObj("M:\\我是研究生\\任务\\分面树的生成\\Facet\\5_giveInstinctiveFacets\\" +
+//				"Tree_(data_structure).txt");
+//		System.out.println(Tree.toString());
+//		AllHyponymy allHyponymy = GetHyponymy.GetHyponymyFromExl("M:\\我是研究生\\任务\\分面树的生成\\Facet\\" +
+//				"otherFiles\\Data_structure上下位.xls");
+//		ArrayList<String> upLocation = allHyponymy.getUpLocation();
+//		ArrayList<String> dnLocation = allHyponymy.getDnLocation();
+//		ArrayList<String> parents = FindRelationship.findParent(upLocation,dnLocation,"AVL_tree");
+//		System.out.println(parents);
+		Topic Tree = TxtToObject.SaveTxtToObj("M:\\我是研究生\\任务\\分面树的生成\\Facet\\5_giveInstinctiveFacets\\" +
+				"Associative_array.txt");
+//		System.out.println(Tree.toString());
+		Tree = OperationToTopic.removeEmptyFacet(Tree);
+		Tree = OperationToTopic.Deduplication(Tree);
+		System.out.println(Tree.toString());
 	}
+
+
 }

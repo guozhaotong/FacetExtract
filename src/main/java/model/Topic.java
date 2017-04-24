@@ -26,6 +26,14 @@ public class Topic {
 		this.facets = facets;
 	}
 
+    public Topic(String name) {
+        this.name = name;
+    }
+
+    public Topic(String name, List<Facet> facets) {
+        this.name = name;
+        this.facets = facets;
+    }
 
 	public Topic() {
 		super();
@@ -35,8 +43,12 @@ public class Topic {
 
 	@Override
 	public String toString() {
-		return "Topic [name=" + name + ", facets=" + facets + "]";
-	}
+        String s = "name:" + name + "\n\nfacets:\n";
+        for (Facet facet : facets) {
+            s = s + facet.toString() + "\n";
+        }
+        return s;
+    }
 	
 	
 	

@@ -21,7 +21,6 @@ public class oneNode {
 	}
 	public oneNode() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	public String getNodeName() {
 		return nodeName;
