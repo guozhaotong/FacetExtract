@@ -57,6 +57,17 @@ public class OperationToFacet {
         return f1;
     }
 
+    public static Boolean Contain(List<Facet> list, String name) {
+        Boolean contain = false;
+        for (Facet facet : list) {
+            if (facet.getName().equals(name)) {
+                contain = true;
+                break;
+            }
+        }
+        return contain;
+    }
+
     public static List<Facet> clone(List<Facet> list) {
         List<Facet> list1 = new ArrayList<>();
         for (Facet facet : list) {

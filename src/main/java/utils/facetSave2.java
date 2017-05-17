@@ -1,24 +1,24 @@
 package utils;
+
+import method.TxtToObject;
+import model.Facet;
+import model.Topic;
+import org.apache.commons.io.FileUtils;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.io.FileUtils;
-
-import method.TxtToObject;
-import model.Facet;
-import model.Topic;
-
  
 public class facetSave2 {
     public static void main(String[] args) throws Exception {
     	String oriPath = "M:\\我是研究生\\任务\\分面树的生成\\Facet\\";
-    	String dirFilePath = "1_origin\\";
-    	String domain = "Data_structure";
-    	String tableName1 = "facet_ori";
-    	String tableName2 = "facet_relation_ori";
-    	doit1(oriPath,dirFilePath,domain,tableName1,tableName2);
+        String dirFilePath = "7_facetHyponymyMerge\\";
+        String domain = "Data_structure";
+        String tableName1 = "facet_fin";
+        String tableName2 = "facet_relation_fin";
+        doit1(oriPath,dirFilePath,domain,tableName1,tableName2);
     	System.out.println("Done.");
     }
    

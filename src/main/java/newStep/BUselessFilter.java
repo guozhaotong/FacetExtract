@@ -22,8 +22,8 @@ public class BUselessFilter
 	public static void UselessFilter(String oriPath, String domain) {
 		String[] prep = {"of", "for", "at", "in", "on", "over", "to", "by", "about", "under", "after"};
 		String[] StopSaveWords = {"see also", "references", "external links", "further reading", "vs."};
-		String[] UselessWords = {"overview", "bibliography", "other", "type", "types", "case", "class"};
-		File dirfile =new File(oriPath + "2_UselessFilter");
+        String[] UselessWords = {"overview", "bibliography", "other", "type", "types", "case", "class", "summary"};
+        File dirfile =new File(oriPath + "2_UselessFilter");
 		if (!dirfile.exists() && !dirfile.isDirectory())
 		{       
 		    dirfile .mkdir();    

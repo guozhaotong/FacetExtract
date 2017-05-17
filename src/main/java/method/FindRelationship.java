@@ -4,12 +4,17 @@ package method;
 import jxl.Sheet;
 import jxl.Workbook;
 import jxl.read.biff.BiffException;
+import model.AllHyponymy;
+import model.Facet;
+import model.Topic;
 import model.oneNode;
+import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 
 public class FindRelationship {
 
@@ -177,8 +182,17 @@ public class FindRelationship {
 		}
 		return layer;
 	}
-	
-	/**
+
+    public static ArrayList<String> findDirectParent(ArrayList<String> upLocation, ArrayList<String> dnLocation, String node) {
+        ArrayList<String> directParent = new ArrayList<>();
+        for (int i = 0; i < upLocation.size(); i++) {
+            if (dnLocation.get(i).equals(node))
+                directParent.add(upLocation.get(i));
+        }
+        return directParent;
+    }
+
+    /**
 	 * 用于找到一个特定节点node所有的祖先节点
 	 * @param upLocation 上下位关系中，上位关系那一列 
 	 * @param dnLocation 上下位关系中，下位关系那一列
@@ -321,4 +335,56 @@ public class FindRelationship {
 		for(String str : c)
 			System.out.println(str);
 	}
+
+    public static void FindRelatedTopics() {
+        String oriPath = "M:\\我是研究生\\任务\\分面树的生成\\Facet\\";
+        String domain = "Data_structure";
+        String InputFilePath = oriPath + "2_UselessFilter\\";
+        String OutputFilePath = oriPath + "label ground truth\\";
+        AllHyponymy allHyponymy = GetHyponymy.GetHyponymyFromExl(oriPath + "otherFiles\\" + domain + "上下位.xls");
+        ArrayList<String> upLocation = allHyponymy.getUpLocation();
+        ArrayList<String> dnLocation = allHyponymy.getDnLocation();
+        List<String> fileName = new ArrayList<>();
+        try {
+            fileName = FileUtils.readLines(new File(oriPath + "otherFiles\\" + domain + "_topics.txt"), "utf-8");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        for (String name : fileName) {
+            System.out.println("Find related facets\t" + name);
+            ArrayList<String> antientTopics = FindRelationship.findParent(upLocation, dnLocation, name);
+            ArrayList<String> brotherTopics = FindRelationship.findBrother(upLocation, dnLocation, name);
+            ArrayList<String> childTopics = FindRelationship.findChild(upLocation, dnLocation, name);
+            String cont = "Ancestor topics: " + antientTopics + "\n";
+            cont = cont + "Brother topics:  " + brotherTopics + "\n";
+            cont = cont + "Child topics:    " + childTopics + "\n\n";
+            cont = cont + "Facets of " + name + ":\n";
+            Topic topic = TxtToObject.SaveTxtToObj(InputFilePath + name + ".txt");
+            for (Facet facet : topic.getFacets()) {
+                cont = cont + facet.toString().toLowerCase() + "\n";
+            }
+            cont = cont + "\n\n" + "Related topic facets:\n";
+            List<Facet> relatedFacetList = new ArrayList<>();
+            for (String a : antientTopics) {
+                Topic ant = TxtToObject.SaveTxtToObj(InputFilePath + a + ".txt");
+                relatedFacetList = OperationToFacet.MergeFacets(relatedFacetList, ant.getFacets());
+            }
+            for (String b : brotherTopics) {
+                Topic bro = TxtToObject.SaveTxtToObj(InputFilePath + b + ".txt");
+                relatedFacetList = OperationToFacet.MergeFacets(relatedFacetList, bro.getFacets());
+            }
+            for (String c : childTopics) {
+                Topic chi = TxtToObject.SaveTxtToObj(InputFilePath + c + ".txt");
+                relatedFacetList = OperationToFacet.MergeFacets(relatedFacetList, chi.getFacets());
+            }
+            for (Facet facet : relatedFacetList) {
+                cont = cont + facet.toString() + "\n";
+            }
+            try {
+                FileUtils.write(new File(OutputFilePath + name + ".txt"), cont, "utf-8");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }
