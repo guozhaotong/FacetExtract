@@ -144,6 +144,7 @@ public class FindRelationship {
 	 */
 	@SuppressWarnings("unchecked")
 	public static int findLayer(ArrayList<String> upLocation, ArrayList<String> dnLocation, String node, String rootNode){
+
 		int layer = 0;
 		if(node.equals(rootNode)) return layer;
 		boolean findroot = false;
@@ -239,7 +240,19 @@ public class FindRelationship {
 		}
 		return parent;
 	}
-	
+
+	public static ArrayList<String> FindDirectChild(AllHyponymy allHyponymy, String node) {
+		ArrayList<String> directChild = new ArrayList();
+		ArrayList<String> upLocation = allHyponymy.getUpLocation();
+		ArrayList<String> dnLocation = allHyponymy.getDnLocation();
+		for (int i = 0; i < upLocation.size(); i++) {
+			if (upLocation.get(i).equals(node)) {
+				directChild.add(dnLocation.get(i));
+			}
+		}
+		return directChild;
+	}
+
 	/**
 	 * 用于找到一个特定节点node所有的孩子节点（知道叶子节点）
 	 * @param upLocation 上下位关系中，上位关系那一列

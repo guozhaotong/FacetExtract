@@ -1,29 +1,62 @@
 package method;
 //用来找到一个节点兄弟节点的分面。
+
+import model.AllHyponymy;
+import model.Facet;
+import model.Topic;
+import org.apache.commons.io.FileUtils;
+
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
-
-import org.apache.commons.io.FileUtils;
 
 public class brotherFacets {
 	public static String oriPath = "M:\\我是研究生\\任务\\分面树的生成\\Facet\\";
-	public static String InputFilePath = oriPath + "7_giveInstinctiveFacets\\3\\";
+	public static String InputFilePath = oriPath + "4_topicNameFilter\\";
+	public static String domain = "Data_structure";
 	
 	public static void main(String[] args) {
 //		System.out.println(facetsOfOneNode("Binary_tree"));
-		allBrotherFacet("Data_mining");
+//		allBrotherFacet();
+		ListBrotherFacet();
 		System.out.println("done.");
 	}
-	
-	@SuppressWarnings("deprecation")
-	public static void allBrotherFacet(String root) {
+
+	public static void ListBrotherFacet() {
+		List<String> fileName = new ArrayList<>();
+		try {
+			fileName = FileUtils.readLines(new File(oriPath + "otherFiles\\" + domain + "_topics.txt"), "utf-8");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		AllHyponymy allHyponymy = GetHyponymy.GetHyponymyFromExl(oriPath + "otherFiles\\" + domain + "上下位.xls");
+		ArrayList<String> upLocation = allHyponymy.getUpLocation();
+		ArrayList<String> dnLocation = allHyponymy.getDnLocation();
+		for (String name : fileName) {
+			System.out.println("Find facets of brother topics\t" + name);
+			int layer = FindRelationship.findLayer(upLocation, dnLocation, name, domain);
+			String cont = layer + "\nname:" + name + "\n\nfacets:\n";
+			ArrayList<String> brotherTopicName = FindRelationship.findBrother(upLocation, dnLocation, name);
+			for (String brother : brotherTopicName) {
+				Topic b = TxtToObject.SaveTxtToObj(InputFilePath + brother + ".txt");
+				List<Facet> facetList = b.getFacets();
+				OperationToFacet.RemoveFacet(facetList, "definition");
+				OperationToFacet.RemoveFacet(facetList, "example");
+				OperationToFacet.RemoveFacet(facetList, "property");
+				OperationToFacet.RemoveFacet(facetList, "application");
+				b.setFacets(facetList);
+				cont = cont + b.toString() + "\n";
+			}
+			try {
+				FileUtils.write(new File(oriPath + "\\complementation\\Brothers\\" + name + ".txt"), cont, "utf-8");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public static void allBrotherFacet() {
 		File dirfile =new File(oriPath + "complementation\\brother");    
 		if  (!dirfile .exists()  && !dirfile .isDirectory())      
 		    dirfile .mkdir();
@@ -32,17 +65,17 @@ public class brotherFacets {
 		for(String name : fileName)
 		{
 			name = name.replaceAll(".txt", "");
-			String cont = name + "(" + FindRelationship.getRelation(name, root,oriPath).getLayer() + ")"
-					+ "(" + FindRelationship.getRelation(name, root, oriPath).getDisToLeaf() + "):\n"
+			String cont = name + "(" + FindRelationship.getRelation(name, domain, oriPath).getLayer() + ")"
+					+ "(" + FindRelationship.getRelation(name, domain, oriPath).getDisToLeaf() + "):\n"
 					+ facetsOfOneNode(name) + "\n";
 			System.out.println(name);
 			ArrayList<String> brother = new ArrayList<>();
-			brother = FindRelationship.getRelation(name,root,oriPath).getBrotherNodes();
+			brother = FindRelationship.getRelation(name, domain, oriPath).getBrotherNodes();
 			String allParentNode = "";
 			HashMap<String,Integer> brotherFacet = new HashMap<>();
 			for(String parentNode : brother)
 			{
-				cont = cont + parentNode + "(" + FindRelationship.getRelation(parentNode, root, oriPath).getLayer() + "):\n"
+				cont = cont + parentNode + "(" + FindRelationship.getRelation(parentNode, domain, oriPath).getLayer() + "):\n"
 					 + facetsOfOneNode(parentNode) + "\n";
 				allParentNode = allParentNode + facetsOfOneNode(parentNode).replaceAll("\t", "");
 			}
@@ -55,7 +88,7 @@ public class brotherFacets {
 			}
 			cont = cont + "all[" + brotherFacet.size() + "]:\n" + sortMap(brotherFacet).replaceAll("=", "\t");
 			try {
-				FileUtils.write(new File(oriPath + "complementation\\brother\\" + name + ".txt"), cont);
+				FileUtils.write(new File(oriPath + "complementation\\brother\\" + name + ".txt"), cont, "utf-8");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
