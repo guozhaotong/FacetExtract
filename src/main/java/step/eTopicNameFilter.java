@@ -77,9 +77,9 @@ public class eTopicNameFilter
 //	    			else if(lineString.contains("##########") && lineString.replaceAll("##########", "").trim().equals(layer2))
 //	    				continue;
 //	    			//进行停用词的消除
-//	    			for (String s : topicWords)
+//	    			for (String stanfordCoreNLP : topicWords)
 //					{
-//	    				lineString = lineString.replaceAll(s, "");
+//	    				lineString = lineString.replaceAll(stanfordCoreNLP, "");
 //	    				if(lineString.trim().equals(""))
 //	    					facet1 = 0;
 //	    				else if(lineString.trim().equals("*****"))

@@ -37,7 +37,7 @@ public class cPluralFilter
 //	    		String txtCont = "";
 //	    		while (   (lineString=BR.readLine()  )!=null  )
 //	    		{
-//	    			lineString=lineString.replaceAll("\\s+", " ");  //用正则表达式替换空格为空
+//	    			lineString=lineString.replaceAll("\\stanfordCoreNLP+", " ");  //用正则表达式替换空格为空
 //	    			String newStr = "";
 //	    			for (String str : lineString.split(" ")) {
 //	    				if(str.toLowerCase().equals("data"))

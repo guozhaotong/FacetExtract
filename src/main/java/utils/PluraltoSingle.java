@@ -1,14 +1,11 @@
 package utils;
 //通过对有道词典进行页面解析，把文件中的单词转换成单数形式。
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
+
+import java.io.*;
 
 public class PluraltoSingle
 {
@@ -37,7 +34,7 @@ public class PluraltoSingle
 //	    		String lineString="";  //接收一行
 //	    		while (   (lineString=BR.readLine()  )!=null  ) 
 //	    		{
-//	    			lineString=lineString.replaceAll("\\s+", " ");  //用正则表达式替换空格为空
+//	    			lineString=lineString.replaceAll("\\stanfordCoreNLP+", " ");  //用正则表达式替换空格为空
 //	    			String newStr = "";
 //	    			for (String str : lineString.split(" ")) {  
 //	    				if(!str.equals(""))

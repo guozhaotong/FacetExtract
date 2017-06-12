@@ -28,7 +28,7 @@ public class dfrequency
 //	    		String lineString="";  //接收一行
 //	    		while (   (lineString=BR.readLine()  )!=null  )
 //	    		{
-//	    			lineString=lineString.replaceAll("\\s+", " ");  //用正则表达式替换一个以上的空格为空
+//	    			lineString=lineString.replaceAll("\\stanfordCoreNLP+", " ");  //用正则表达式替换一个以上的空格为空
 //	    			for (String str : lineString.split(" "))
 //	    			{
 //	    				if(str.equals("")) continue;

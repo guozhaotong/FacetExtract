@@ -82,7 +82,7 @@ public class FInherit {
         }
         for (String s : newFacets) {
             List<Facet> emptyList = new ArrayList<>();
-            Facet f = new Facet("s", emptyList);
+            Facet f = new Facet("stanfordCoreNLP", emptyList);
             firFacet.add(f);
         }
         topic.setFacets(firFacet);

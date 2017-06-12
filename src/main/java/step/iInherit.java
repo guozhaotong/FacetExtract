@@ -23,9 +23,9 @@ public class iInherit {
 //			HashSet<String> facetSelf = oneNodeFacets(InputFilePath + name + ".txt");
 //			ArrayList<String> parent = FindRelationship.getRelation(name,rootTopic,oriPath).getParentNodes();
 //			HashSet<String> parentFacet = GetArraysFacets(parent, name, oriPath, rootTopic);
-//			sureAndCand s = InheritFromBrothers(name, oriPath, rootTopic);
-//			HashSet<String> BrotherfacetCand = s.getCandFacet();
-//			HashSet<String> BrotherfacetSure = s.getSureFacet();
+//			sureAndCand stanfordCoreNLP = InheritFromBrothers(name, oriPath, rootTopic);
+//			HashSet<String> BrotherfacetCand = stanfordCoreNLP.getCandFacet();
+//			HashSet<String> BrotherfacetSure = stanfordCoreNLP.getSureFacet();
 //			ArrayList<String> children = FindRelationship.getRelation(name, rootTopic, oriPath).getChildNodes();
 //			HashSet<String> childrenFacet = GetArraysFacets(children, name, oriPath, rootTopic);
 //			HashSet<String> SureFacet = mergeHashSet(facetSelf, parentFacet, BrotherfacetSure);
