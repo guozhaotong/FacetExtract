@@ -23,10 +23,10 @@ public class GroundTruthComplement {
     }
 
     public static void Complementation() {
-        List<String> fileName = BResult.GetNameOrder(oriPath + "otherFiles\\" + domain + "_topics.txt");
+        List<String> fileName = BResult_delete4.GetNameOrder(oriPath + "otherFiles\\" + domain + "_topics.txt");
         for (String name : fileName) {
             System.out.println(name);
-            List<String> facetName = BResult.GetNameOrder(oriPath + "ground truth\\" + name + ".txt");
+            List<String> facetName = BResult_delete4.GetNameOrder(oriPath + "ground truth\\" + name + ".txt");
             HashSet<String> facets = SaveListInSet(facetName);
             String cont = "";
             for (String f : facets) {

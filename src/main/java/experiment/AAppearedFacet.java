@@ -32,8 +32,8 @@ public class AAppearedFacet {
             e.printStackTrace();
         }
 //        FindAppearedFacet(fileName);
-//        FacetRepresentation(fileName);
-        CreateMatrixP0(fileName);
+        FacetRepresentation(fileName);
+//        CreateMatrixP0(fileName);
     }
 
     public static void CreateMatrixP0(List<String> fileName) {

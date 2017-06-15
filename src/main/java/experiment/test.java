@@ -1,9 +1,9 @@
 package experiment;
 
-import method.TxtToObject;
-import model.Topic;
+import org.apache.commons.io.FileUtils;
 
-import java.util.HashSet;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -15,18 +15,31 @@ public class test {
     public static String domain = "Data_structure";
 
     public static void main(String[] args) {
-        String name = "Abstract_data_type";
-        Topic curTopic = TxtToObject.SaveTxtToObj(oriPath + "4_topicNameFilter\\" + name + ".txt");
-        HashSet<String> facetSet = AAppearedFacet.FindFacetOfOneTopic(curTopic);
-        facetSet = BResult.ComplementFacet(facetSet, name);
-
-        HashSet<String> resFacetSet = BResult.GetOneRes(facetSet, name);
-        //gtFacetSet里面是ground truth
-        HashSet<String> gtFacetSet = new HashSet<>();
-        List<String> gtFacetList = BResult.GetNameOrder(oriPath + "good ground truth\\" + name + ".txt");
-        for (String s : gtFacetList) gtFacetSet.add(s);
-        System.out.println(facetSet);
-        System.out.println(resFacetSet);
-        System.out.println(gtFacetSet);
+        List<String> fileName = BResult_delete4.GetNameOrder(oriPath + "otherFiles\\" + domain + "_topics.txt");
+        String cont = "";
+        for (String name : fileName) {
+            if (name.toLowerCase().contains("algorithm")) {
+                cont = cont + "1\n";
+                continue;
+            } else if (name.toLowerCase().contains("tree") || name.toLowerCase().contains("graph") || name.toLowerCase().contains("heap")) {
+                cont = cont + "2\n";
+                continue;
+            } else if (name.toLowerCase().contains("array") || name.toLowerCase().contains("list") || name.toLowerCase().contains("queue")) {
+                cont = cont + "3\n";
+                continue;
+            } else if (name.toLowerCase().contains("data_type")) {
+                cont = cont + "4\n";
+                continue;
+            } else {
+                cont = cont + "5\n";
+                continue;
+            }
+        }
+        try {
+            FileUtils.write(new File(oriPath + "experiment\\topicCommunity.txt"), cont, "utf-8");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
 }
