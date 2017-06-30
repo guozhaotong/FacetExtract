@@ -23,8 +23,10 @@ public class BResult_delete4 {
     }
 
     public static void GetWholeResult() {
+        System.out.println("正在计算实验结果...");
         List<String> fileName = GetNameOrder(oriPath + "otherFiles\\" + domain + "_topics.txt");
         int i = 0;
+        ArrayList<Double> ham_loss = new ArrayList<>();
         ArrayList<Double> p1_micro = new ArrayList<>();
         ArrayList<Double> r1_micro = new ArrayList<>();
         ArrayList<Double> f1_micro = new ArrayList<>();
@@ -39,13 +41,14 @@ public class BResult_delete4 {
         }
         String cont = "";
         for (String name : fileName) {
-            System.out.println(name);
+//            System.out.println(name);
             Topic curTopic = TxtToObject.SaveTxtToObj(oriPath + "4_topicNameFilter\\" + name + ".txt");
             //resFacetSet里面是实验结果
             HashSet<String> facetSet = AAppearedFacet.FindFacetOfOneTopic(curTopic);
-            HashSet<String> resFacetSet = ComplementFacet(facetSet, name);
-            resFacetSet = GetOneRes(resFacetSet, name);
 //            HashSet<String> resFacetSet = (HashSet<String>) facetSet.clone();
+            HashSet<String> resFacetSet = ComplementFacet(facetSet, name);
+            resFacetSet = ComplementFacet(facetSet, name);
+            resFacetSet = GetOneRes(resFacetSet, name);
             //gtFacetSet里面是ground truth
             HashSet<String> gtFacetSet = new HashSet<>();
             List<String> gtFacetList = GetNameOrder(oriPath + "good ground truth\\" + name + ".txt");
@@ -64,6 +67,8 @@ public class BResult_delete4 {
             if (resFacetSet.contains("history")) {
                 gtFacetSet.add("history");
             }
+            HashSet<String> topicFacetSet = (HashSet<String>) gtFacetSet.clone();
+            topicFacetSet.addAll(resFacetSet);
             //开始为计算宏平均做准备
             for (int j = 0; j < facetOrder.size(); j++) {
                 if (resFacetSet.contains(facetOrder.get(j))) {
@@ -76,30 +81,34 @@ public class BResult_delete4 {
                     should.set(j, should.get(j) + 1);
                 }
             }
-            //开始计算实验结果p
-            int groundTruthSize = gtFacetSet.size();
-            int rightNum1 = 0;
-            int myResSize = resFacetSet.size();
-            for (String s : resFacetSet) {
-                if (gtFacetSet.contains(s)) {
-                    rightNum1++;
-                }
-            }
-            if (myResSize == 0) p1_micro.add(0.0);
-            else p1_micro.add((double) rightNum1 / myResSize);//precision
-            //开始计算实验结果recall
+
             int sameNum1 = 0;
             for (String s : gtFacetSet) {
                 if (resFacetSet.contains(s)) {
                     sameNum1++;
                 }
             }
+            //开始计算海明损失
+            int topicFSize = topicFacetSet.size();
+            if (topicFSize == 0) ham_loss.add(1.0);
+            else {
+                double ham = (double) sameNum1 / topicFSize;
+                ham_loss.add(1.0 - ham);
+            }
+//            ham_loss.add(1.0- (double)(sameNum1 + facetOrder.size() - topicFSize) / facetOrder.size());
+//            System.out.println(ham_loss.get(i));
+            //开始计算实验结果p
+            int myResSize = resFacetSet.size();
+            if (myResSize == 0) p1_micro.add(0.0);
+            else p1_micro.add((double) sameNum1 / myResSize);//precision
+            //开始计算实验结果recall
+            int groundTruthSize = gtFacetSet.size();
             r1_micro.add((double) sameNum1 / groundTruthSize);//recall
             if ((r1_micro.get(i) + p1_micro.get(i)) == 0) f1_micro.add(0.0);
             else f1_micro.add(2 * r1_micro.get(i) * p1_micro.get(i) / (r1_micro.get(i) + p1_micro.get(i)));
-            cont = cont + p1_micro.get(i) + " " + r1_micro.get(i) + " " + f1_micro.get(i) + "\n";
+            cont = cont + ham_loss.get(i) + " " + p1_micro.get(i) + " " + r1_micro.get(i) + " " + f1_micro.get(i) + "\n";
             i++;
-//            System.out.println(gtFacetSet);
+//            System.out.println(sameNum1 + " " + topicFSize + " " + ham);
 //            System.out.println(resFacetSet);
         }
         try {

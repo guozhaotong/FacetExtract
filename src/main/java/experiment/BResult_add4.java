@@ -45,8 +45,13 @@ public class BResult_add4 {
             Topic curTopic = TxtToObject.SaveTxtToObj(oriPath + "4_topicNameFilter\\" + name + ".txt");
             //resFacetSet里面是实验结果
             HashSet<String> facetSet = AAppearedFacet.FindFacetOfOneTopic(curTopic);
-            HashSet<String> resFacetSet = BResult_delete4.ComplementFacet(facetSet, name);
-            resFacetSet = BResult_delete4.GetOneRes(resFacetSet, name);
+//            HashSet<String> resFacetSet = BResult_delete4.ComplementFacet(facetSet, name);
+            HashSet<String> resFacetSet = (HashSet<String>) facetSet.clone();
+//            resFacetSet.add("definition");
+//            resFacetSet.add("application");
+//            resFacetSet.add("example");
+//            resFacetSet.add("property");
+//                    resFacetSet = BResult_delete4.GetOneRes(resFacetSet, name);
 //            HashSet<String> resFacetSet = (HashSet<String>) facetSet.clone();
             //gtFacetSet里面是ground truth
             HashSet<String> gtFacetSet = new HashSet<>();
@@ -63,14 +68,16 @@ public class BResult_add4 {
                 resFacetSet.add("type");
             }
             HashSet<String> gtFacetSetClone = (HashSet<String>) gtFacetSet.clone();
-            for (String s : gtFacetSetClone) {
-                if (!facetOrder.contains(s)) {
-                    gtFacetSet.remove(s);
-                }
-            }
+//            for (String s : gtFacetSetClone) {
+//                if (!facetOrder.contains(s)) {
+//                    gtFacetSet.remove(s);
+//                }
+//            }
             if (resFacetSet.contains("history")) {
                 gtFacetSet.add("history");
             }
+//            System.out.println(resFacetSet);
+//            System.out.println(gtFacetSet);
             //开始为计算宏平均做准备
             for (int j = 0; j < facetOrder.size(); j++) {
                 if (resFacetSet.contains(facetOrder.get(j))) {
