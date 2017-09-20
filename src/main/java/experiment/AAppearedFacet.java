@@ -7,6 +7,7 @@ import model.AllHyponymy;
 import model.Facet;
 import model.Topic;
 import org.apache.commons.io.FileUtils;
+import org.apache.log4j.Logger;
 import org.ujmp.core.Matrix;
 import org.ujmp.core.calculation.Calculation.Ret;
 
@@ -23,6 +24,8 @@ import java.util.List;
  * @date 2017/5/25.
  */
 public class AAppearedFacet {
+    private static Logger logger = Logger.getLogger(AAppearedFacet.class);
+
     public static String oriPath = "M:\\我是研究生\\任务\\分面树的生成\\Facet\\";
     public static String domain = "Data_structure";
 
@@ -120,7 +123,8 @@ public class AAppearedFacet {
     }
 
     public static void label_propagation_ctopk(List<String> fileName, List<String> facetList, Matrix f, Matrix p) {
-        System.out.println("标签传播算法现在开始...");
+//        System.out.println();
+        logger.info("标签传播算法现在开始...");
         long[] f_size = f.getSize();
         long[] p_size = p.getSize();
         long m = f_size[0];
@@ -437,6 +441,7 @@ public class AAppearedFacet {
      */
     public static Matrix FacetRepresentation(List<String> fileName, List<String> facetName) {
         System.out.println("正在构建矩阵F...");
+
         Matrix F = Matrix.Factory.zeros(fileName.size(), facetName.size());
         HashMap<String, Integer> facetNameMap = new HashMap<>();
         int i = 0;
@@ -553,4 +558,5 @@ public class AAppearedFacet {
         }
         return hashSet;
     }
+
 }

@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Topic {
@@ -49,8 +50,20 @@ public class Topic {
         }
         return s;
     }
-	
-	
-	
-	
+
+    public void addFacet(String s) {
+        List<Facet> empList = new ArrayList<>();
+        Facet facet = new Facet(s, empList);
+        List<Facet> facetList = this.getFacets();
+        facetList.add(facet);
+    }
+
+    public boolean containsFacet(String s) {
+        boolean res = false;
+        for (Facet facet : this.getFacets()) {
+            res = facet.containsFacet(s);
+            if (res) return true;
+        }
+        return res;
+    }
 }

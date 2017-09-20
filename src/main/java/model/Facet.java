@@ -50,4 +50,17 @@ public class Facet {
         }
         return s.trim();
     }
+
+    public boolean containsFacet(String s) {
+        boolean res = false;
+        if (this.getName().equals(s)) {
+            return true;
+        } else {
+            for (Facet facet : this.getNextFacets()) {
+                res = facet.containsFacet(s);
+                if (res) return true;
+            }
+        }
+        return false;
+    }
 }

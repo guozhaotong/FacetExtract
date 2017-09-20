@@ -23,7 +23,7 @@ public class GFacetHyponymyMerge {
     }
 
     public static void FacetHyponymyMerge(String oriPath, String domain) {
-        String InputFilePath = oriPath + "6_inheritFacets\\";
+        String InputFilePath = oriPath + "6_AddExpRes\\";
         String OutputFilePath = oriPath + "7_facetHyponymyMerge";
         List<String> fileName = new ArrayList<>();
         try {

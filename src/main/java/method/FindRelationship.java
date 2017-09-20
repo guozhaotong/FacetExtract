@@ -254,8 +254,8 @@ public class FindRelationship {
 	}
 
 	/**
-	 * 用于找到一个特定节点node所有的孩子节点（知道叶子节点）
-	 * @param upLocation 上下位关系中，上位关系那一列
+     * 用于找到一个特定节点node所有的孩子节点（直到叶子节点）
+     * @param upLocation 上下位关系中，上位关系那一列
 	 * @param dnLocation 上下位关系中，下位关系那一列
 	 * @param node 目标节点
 	 * @return 所有孩子节点。
