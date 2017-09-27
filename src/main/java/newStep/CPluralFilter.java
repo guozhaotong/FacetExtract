@@ -15,8 +15,10 @@ import java.util.List;
 public class CPluralFilter {
 
     public static void main(String[] args) throws IOException {
-        String oriPath = "M:\\我是研究生\\任务\\分面树的生成\\Facet\\";
-        String domain = "Data_structure";
+        String oriP = "M:\\我是研究生\\任务\\分面树的生成\\Facet\\";
+//		String domain = "Data_structure";
+        String domain = "Data_mining";
+        String oriPath = oriP + domain + "\\";
         PluralFilter(oriPath, domain);
     }
 

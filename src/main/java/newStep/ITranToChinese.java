@@ -1,5 +1,7 @@
 package newStep;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import experiment.AAppearedFacet;
 import experiment.BResult_delete4;
 import method.TxtToObject;
@@ -33,9 +35,12 @@ public class ITranToChinese {
 
     public static void main(String args[]) {
 //        TransToChinese();
-        change();
+//        change();
     }
 
+    /**
+     * 用于改掉里面翻译的不好的内容。这个步骤要在翻译之后执行。
+     */
     public static void change() {
         String OutputFilePath = oriPath + "9_TransToChinese\\";
         List<String> fileName = BResult_delete4.GetNameOrder(oriPath + "otherFiles\\" + domain + "_topics.txt");
@@ -57,6 +62,9 @@ public class ITranToChinese {
         }
     }
 
+    /**
+     * 用于把一个主题翻译成中文的分面结构。
+     */
     public static void TransToChinese() {
         String InputFilePath = oriPath + "8_AddType\\";
         String OutputFilePath = oriPath + "9_TransToChinese\\";
@@ -82,6 +90,13 @@ public class ITranToChinese {
         }
     }
 
+    /**
+     * 把一个主题翻译成中文。由于API限制了翻译次数，所以每个分面翻译一次，保存在一个map结构中。
+     *
+     * @param oneTopic 需要翻译的主题
+     * @param map      中英文分面对照
+     * @return 中文的主题分面结构
+     */
     public static Topic TransTopic(Topic oneTopic, HashMap<String, String> map) {
         List<Facet> facetList1 = new ArrayList<>();
         if (!oneTopic.getFacets().isEmpty()) {
@@ -112,6 +127,11 @@ public class ITranToChinese {
         return topic;
     }
 
+    /**
+     * 把需要翻译的文本放进去，输出翻译后的文本
+     * @param query 需要翻译的文本
+     * @return 翻译后的文本
+     */
     public static String trans(String query) {
         String appKey = "4785de1c9e84789c";
         String salt = String.valueOf(System.currentTimeMillis());
@@ -139,14 +159,14 @@ public class ITranToChinese {
         return res;
     }
 
-    public static String GetTranslation(String s) {
+    public static String GetTranslation(String s){
         String res = "";
-        res = s.split("translation")[1];
-        res = res.split("errorCode")[0];
-        res = res.split("\\[\"")[1];
-        res = res.split("\"\\]")[0];
+        JsonParser parse = new JsonParser();
+        JsonObject json = (JsonObject) parse.parse(s);
+        res = json.get("translation").getAsString();
         return res;
     }
+
 
     public static String requestForHttp(String url, Map requestParams) throws Exception {
         String result = null;
