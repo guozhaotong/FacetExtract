@@ -146,7 +146,7 @@ public class ITranToChinese {
         params.put("salt", salt);
         params.put("appKey", appKey);
         try {
-            System.out.println(requestForHttp("https://openapi.youdao.com/api", params));
+            System.err.println(requestForHttp("https://openapi.youdao.com/api", params));
         } catch (Exception e) {
             e.printStackTrace();
         }
