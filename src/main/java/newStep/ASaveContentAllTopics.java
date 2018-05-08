@@ -21,7 +21,8 @@ public class ASaveContentAllTopics
 	{
         String oriP = "M:\\我是研究生\\任务\\分面树的生成\\Facet\\";
 //		String domain = "Data_structure";
-        String domain = "Data_mining";
+//        String domain = "Data_mining";
+        String domain = "C_programming_language";
         String oriPath = oriP + domain + "\\";
         SaveContantAllTopics(oriPath, domain);
 	}

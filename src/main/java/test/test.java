@@ -1,17 +1,11 @@
 package test;
 
-
-import static newStep.ITranToChinese.trans;
-
 /**
  * @author 郭朝彤
- * @date 2017/7/7.
+ * @date 2018/5/2.
  */
 public class test {
-    public static void main(String[] args) throws Exception {
-        System.out.println(trans("how are you."));
+    public static void main(String[] args) {
+        System.out.println("I love you".replaceAll("\\s+", ""));
     }
-
-
 }
-

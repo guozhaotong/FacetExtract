@@ -51,7 +51,7 @@ public class StanfordLemmatizer {
             }
         }
         if (lemmas.size() != 1) {
-            System.out.println("bug!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+            System.out.println(word + ": bug!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         }
         return lemmas.get(0);
     }

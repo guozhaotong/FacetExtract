@@ -6,6 +6,8 @@ import method.TxtToObject;
 import model.Facet;
 import model.Topic;
 import org.apache.commons.io.FileUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import utils.StanfordLemmatizer;
 
 import java.io.File;
@@ -14,10 +16,13 @@ import java.util.List;
 
 public class CPluralFilter {
 
+    static Logger logger = LogManager.getLogger(LogManager.ROOT_LOGGER_NAME);
+
     public static void main(String[] args) throws IOException {
         String oriP = "M:\\我是研究生\\任务\\分面树的生成\\Facet\\";
 //		String domain = "Data_structure";
-        String domain = "Data_mining";
+//        String domain = "Data_mining";
+        String domain = "C_programming_language";
         String oriPath = oriP + domain + "\\";
         PluralFilter(oriPath, domain);
     }
@@ -47,17 +52,19 @@ public class CPluralFilter {
 
     public static Facet PluralToSingle(Facet facet) {
         String curFacet = facet.getName();
-        curFacet = curFacet.replaceAll("\\s+", " ");  //用正则表达式替换空格为空
-        String newStr = "";
+        StringBuilder newStr = new StringBuilder("");
         for (String str : curFacet.split(" ")) {
+//            logger.info(str);
             if (str.toLowerCase().equals("data"))
-                newStr = newStr + " " + "data";
+                newStr.append(" data");
             else if (str.toLowerCase().equals("analysis"))
-                newStr = newStr + " " + "analysis";
+                newStr.append(" analysis");
+            else if ("C++".equals(str.toLowerCase()))
+                newStr.append(" C++");
             else
-                newStr = newStr + " " + StanfordLemmatizer.traffer(str).toLowerCase();
+                newStr.append(" " + StanfordLemmatizer.traffer(str.replaceAll(",", "")).toLowerCase());
         }
-        facet.setName(newStr.trim());
+        facet.setName(newStr.toString().trim());
         return facet;
     }
 }

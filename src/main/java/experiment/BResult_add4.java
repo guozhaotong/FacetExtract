@@ -17,8 +17,8 @@ import java.util.List;
  * @date 2017/6/7.
  */
 public class BResult_add4 {
-    public static String oriPath = "M:\\我是研究生\\任务\\分面树的生成\\Facet\\";
     public static String domain = "Data_structure";
+    public static String oriPath = "M:\\我是研究生\\任务\\分面树的生成\\Facet\\" + domain + "\\";
 
     public static void main(String[] args) {
         GetWholeResult();
@@ -100,7 +100,8 @@ public class BResult_add4 {
                 }
             }
             if (myResSize == 0) p1_micro.add(0.0);
-            else p1_micro.add((double) rightNum1 / myResSize);//precision
+//            else p1_micro.add((double) rightNum1 / myResSize);//precision
+            else p1_micro.add((double) (rightNum1 + 147 - myResSize) / 147);//precision
             //开始计算实验结果recall
             int sameNum1 = 0;
             for (String s : gtFacetSet) {

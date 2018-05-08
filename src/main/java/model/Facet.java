@@ -18,7 +18,6 @@ public class Facet {
 	}
 	public Facet() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	public String getName() {
 		return name;
@@ -38,6 +37,7 @@ public class Facet {
         this.nextFacets = nextFacets;
     }
 
+    @Override
     public String toString() {
         String s = name + "\n";
         for (Facet f : nextFacets) {
@@ -58,9 +58,12 @@ public class Facet {
         } else {
             for (Facet facet : this.getNextFacets()) {
                 res = facet.containsFacet(s);
-                if (res) return true;
+                if (res) {
+                    return true;
+                }
             }
         }
         return false;
     }
+
 }

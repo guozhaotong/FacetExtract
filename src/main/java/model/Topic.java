@@ -38,7 +38,6 @@ public class Topic {
 
 	public Topic() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 
@@ -62,8 +61,22 @@ public class Topic {
         boolean res = false;
         for (Facet facet : this.getFacets()) {
             res = facet.containsFacet(s);
-            if (res) return true;
+            if (res) {
+                return true;
+            }
         }
         return res;
+    }
+
+    public int facetNum() {
+        int num = 0;
+        num += this.getFacets().size();
+        for (Facet facet1 : this.getFacets()) {
+            num += facet1.getNextFacets().size();
+            for (Facet facet2 : facet1.getNextFacets()) {
+                num += facet2.getNextFacets().size();
+            }
+        }
+        return num;
     }
 }

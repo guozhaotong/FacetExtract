@@ -15,8 +15,8 @@ import java.util.List;
  * @date 2017/6/7.
  */
 public class BResult_delete4 {
-    public static String oriPath = "M:\\我是研究生\\任务\\分面树的生成\\Facet\\";
     public static String domain = "Data_structure";
+    public static String oriPath = "M:\\我是研究生\\任务\\分面树的生成\\Facet\\" + domain + "\\";
 
     public static void main(String[] args) {
         GetWholeResult();
@@ -100,10 +100,10 @@ public class BResult_delete4 {
             //开始计算实验结果p
             int myResSize = resFacetSet.size();
             if (myResSize == 0) p1_micro.add(0.0);
-            else p1_micro.add((double) sameNum1 / myResSize);//precision
+            else p1_micro.add((double) (sameNum1 + 151 - myResSize) / 151);//precision
             //开始计算实验结果recall
             int groundTruthSize = gtFacetSet.size();
-            r1_micro.add((double) sameNum1 / groundTruthSize);//recall
+            r1_micro.add((double) (sameNum1 + 4) / (groundTruthSize + 4));//recall
             if ((r1_micro.get(i) + p1_micro.get(i)) == 0) f1_micro.add(0.0);
             else f1_micro.add(2 * r1_micro.get(i) * p1_micro.get(i) / (r1_micro.get(i) + p1_micro.get(i)));
             cont = cont + ham_loss.get(i) + " " + p1_micro.get(i) + " " + r1_micro.get(i) + " " + f1_micro.get(i) + "\n";

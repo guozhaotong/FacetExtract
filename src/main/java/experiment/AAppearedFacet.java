@@ -26,8 +26,8 @@ import java.util.List;
 public class AAppearedFacet {
     private static Logger logger = Logger.getLogger(AAppearedFacet.class);
 
-    public static String oriPath = "M:\\我是研究生\\任务\\分面树的生成\\Facet\\";
     public static String domain = "Data_structure";
+    public static String oriPath = "M:\\我是研究生\\任务\\分面树的生成\\Facet\\" + domain + "\\";
 
     public static void main(String args[]) {
         List<String> fileName = BResult_delete4.GetNameOrder(oriPath + "otherFiles\\" + domain + "_topics.txt");
@@ -552,8 +552,9 @@ public class AAppearedFacet {
             hashSet.add(facet.getName());
             for (Facet secFacet : facet.getNextFacets()) {
                 hashSet.add(secFacet.getName());
-                for (Facet thiFacet : secFacet.getNextFacets())
+                for (Facet thiFacet : secFacet.getNextFacets()) {
                     hashSet.add(thiFacet.getName());
+                }
             }
         }
         return hashSet;
