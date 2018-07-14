@@ -41,16 +41,16 @@ public class BResult_add4 {
         }
         String cont = "";
         for (String name : fileName) {
-            System.out.println(name);
+//            System.out.println(name);
             Topic curTopic = TxtToObject.SaveTxtToObj(oriPath + "4_topicNameFilter\\" + name + ".txt");
             //resFacetSet里面是实验结果
             HashSet<String> facetSet = AAppearedFacet.FindFacetOfOneTopic(curTopic);
-//            HashSet<String> resFacetSet = BResult_delete4.ComplementFacet(facetSet, name);
-            HashSet<String> resFacetSet = (HashSet<String>) facetSet.clone();
-//            resFacetSet.add("definition");
-//            resFacetSet.add("application");
-//            resFacetSet.add("example");
-//            resFacetSet.add("property");
+            HashSet<String> resFacetSet = BResult_delete4.ComplementFacet(facetSet, name);
+//            HashSet<String> resFacetSet = (HashSet<String>) facetSet.clone();
+            resFacetSet.add("definition");
+            resFacetSet.add("application");
+            resFacetSet.add("example");
+            resFacetSet.add("property");
 //                    resFacetSet = BResult_delete4.GetOneRes(resFacetSet, name);
 //            HashSet<String> resFacetSet = (HashSet<String>) facetSet.clone();
             //gtFacetSet里面是ground truth
@@ -112,7 +112,7 @@ public class BResult_add4 {
             r1_micro.add((double) sameNum1 / groundTruthSize);//recall
             if ((r1_micro.get(i) + p1_micro.get(i)) == 0) f1_micro.add(0.0);
             else f1_micro.add(2 * r1_micro.get(i) * p1_micro.get(i) / (r1_micro.get(i) + p1_micro.get(i)));
-            cont = cont + p1_micro.get(i) + " " + r1_micro.get(i) + " " + f1_micro.get(i) + "\n";
+            cont = cont + "1 " + p1_micro.get(i) + " " + r1_micro.get(i) + " " + f1_micro.get(i) + "\n";
             i++;
 //            System.out.println(gtFacetSet);
 //            System.out.println(resFacetSet);

@@ -103,7 +103,7 @@ public class BResult_delete4 {
             else p1_micro.add((double) (sameNum1 + 151 - myResSize) / 151);//precision
             //开始计算实验结果recall
             int groundTruthSize = gtFacetSet.size();
-            r1_micro.add((double) (sameNum1 + 4) / (groundTruthSize + 4));//recall
+            r1_micro.add((double) (sameNum1 + 5) / (groundTruthSize + 5));//recall implementation
             if ((r1_micro.get(i) + p1_micro.get(i)) == 0) f1_micro.add(0.0);
             else f1_micro.add(2 * r1_micro.get(i) * p1_micro.get(i) / (r1_micro.get(i) + p1_micro.get(i)));
             cont = cont + ham_loss.get(i) + " " + p1_micro.get(i) + " " + r1_micro.get(i) + " " + f1_micro.get(i) + "\n";

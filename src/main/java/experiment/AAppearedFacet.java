@@ -6,6 +6,7 @@ import method.TxtToObject;
 import model.AllHyponymy;
 import model.Facet;
 import model.Topic;
+import newStep.CCalcSimilarity;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.ujmp.core.Matrix;
@@ -34,8 +35,10 @@ public class AAppearedFacet {
         List<String> facetList = BResult_delete4.GetNameOrder(oriPath + "experiment\\facet_order.txt");
 //        FindAppearedFacet(fileName);
         Matrix f = FacetRepresentation(fileName, facetList);
-        Matrix p0 = CreateMatrixP0(fileName);
-        Matrix p1 = CreateMatrixP1(p0);
+//        Matrix p0 = CreateMatrixP0(fileName);
+//        Matrix p1 = CreateMatrixP1(p0);
+        double[][] p0 = CCalcSimilarity.txtToMatrix("M:\\我是研究生\\任务\\分面树的生成\\Facet\\Data_structure\\0_summary\\p0_auto.txt");
+        Matrix p1 = Matrix.Factory.importFromArray(p0);
         Matrix p2 = CreateMatrixP2(p1);
         label_propagation_ctopk(fileName, facetList, f, p2.transpose(Ret.LINK));
         BResult_delete4.GetWholeResult();
@@ -324,7 +327,7 @@ public class AAppearedFacet {
 
     /**
      * 用于生成矩阵p1
-     *
+     * 地杰斯特拉
      * @param p0
      */
     public static Matrix CreateMatrixP1(Matrix p0) {
@@ -374,6 +377,11 @@ public class AAppearedFacet {
         return p1;
     }
 
+    /**
+     * 按行归一化
+     * @param p1
+     * @return
+     */
     public static Matrix CreateMatrixP2(Matrix p1) {
         System.out.println("正在构建矩阵P2...");
         long[] p1_size = p1.getSize();

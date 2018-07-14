@@ -68,6 +68,7 @@ public class BProcessSummary {
                 .replaceAll("\\[", " ")
                 .replaceAll("—", " ")
                 .replaceAll("\\d+", "")
+                .replaceAll(":", "")
                 .replaceAll("\"", "");
         return str;
     }

@@ -18,7 +18,7 @@ public class MySqlDemo {
          String sql;
          // MySQL��JDBC URL��д��ʽ��jdbc:mysql://�������ƣ����Ӷ˿�/���ݿ������?����=ֵ
          // ������������Ҫָ��useUnicode��characterEncoding
-         // ִ�����ݿ����֮ǰҪ�����ݿ����ϵͳ�ϴ���һ�����ݿ⣬�����Լ����� �������֮ǰ��Ҫ�ȴ���test���ݿ�
+         // ִ�����ݿ����֮ǰҪ�����ݿ����ϵͳ�ϴ���һ�����ݿ⣬�����Լ����� �������֮ǰ��Ҫ�ȴ���CalcSummarySim���ݿ�
          String url = "jdbc:mysql://202.117.54.81:3306/tong?user=root&password=tong&useUnicode=true&characterEncoding=utf-8";
   
          try {
@@ -57,7 +57,7 @@ public class MySqlDemo {
         String sql;
         // MySQL��JDBC URL��д��ʽ��jdbc:mysql://�������ƣ����Ӷ˿�/���ݿ������?����=ֵ
         // ������������Ҫָ��useUnicode��characterEncoding
-        // ִ�����ݿ����֮ǰҪ�����ݿ����ϵͳ�ϴ���һ�����ݿ⣬�����Լ����� �������֮ǰ��Ҫ�ȴ���test���ݿ�
+        // ִ�����ݿ����֮ǰҪ�����ݿ����ϵͳ�ϴ���һ�����ݿ⣬�����Լ����� �������֮ǰ��Ҫ�ȴ���CalcSummarySim���ݿ�
         String url = "jdbc:mysql://202.117.54.81:3306/tong?user=root&password=tong&useUnicode=true&characterEncoding=utf-8";
  
         try {

@@ -28,7 +28,7 @@ public class topicExtract {
 			cont = cont + string + "\n";
 		}
 		try {
-			FileUtils.write(new File("M:\\test.txt"), cont);
+			FileUtils.write(new File("M:\\CalcSummarySim.txt"), cont);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

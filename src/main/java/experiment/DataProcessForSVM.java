@@ -34,7 +34,7 @@ public class DataProcessForSVM {
         }
         try {
             FileUtils.write(new File(oriPath + "train.libsvm"), train.toString(), "utf-8");
-            FileUtils.write(new File(oriPath + "test.libsvm"), test.toString(), "utf-8");
+            FileUtils.write(new File(oriPath + "CalcSummarySim.libsvm"), test.toString(), "utf-8");
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -12,6 +12,9 @@ public class Word2VecUtil {
     public static void main(String[] args) {
         Word2Vec model = Word2VecUtil.getModel("M:\\我是研究生\\词表\\wiki50.en.text.vector.石磊");
         float xxx = model.wordSimilarity("the", "or");
+        System.out.println(xxx);
+
+        xxx = model.wordSimilarity("the", "the");
         //如果某一个单词在vec中不存在，则计算出xxx为0
         System.out.println(xxx);
     }
@@ -29,7 +32,5 @@ public class Word2VecUtil {
         }
         System.out.println("load word2vec done! used " + (System.currentTimeMillis() - startTime) + " millis.");
         return vec;
-
-
     }
 }

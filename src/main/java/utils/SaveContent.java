@@ -48,21 +48,21 @@ public class SaveContent
 		for (Element ele : element_title)
 		{
 			System.out.println(ele.select("a> span.toctext").first().text());
-			writetxt("E://test.txt", ele.select("a> span.toctext").first().text() + "\n");
+			writetxt("E://CalcSummarySim.txt", ele.select("a> span.toctext").first().text() + "\n");
 			if (ele.select("ul").size() >= 1)
 			{
 				Elements ele_child = ele.select("ul >li.toclevel-2");
 				for (Element element : ele_child)
 				{
 					System.out.println("*****" + element.select("a > span.toctext").first().text());
-					writetxt("E://test.txt","*****" + element.select("a > span.toctext").first().text() + "\n");
+					writetxt("E://CalcSummarySim.txt","*****" + element.select("a > span.toctext").first().text() + "\n");
 					if (element.select("ul").size() >= 1)
 					{
 						Elements ele_grandson = element.select("ul >li.toclevel-3");
 						for (Element elementson : ele_grandson)
 						{
 							System.out.println("##########" + elementson.select("a > span.toctext").first().text());
-							writetxt("E://test.txt", "##########" + elementson.select("a > span.toctext").first().text() + "\n");
+							writetxt("E://CalcSummarySim.txt", "##########" + elementson.select("a > span.toctext").first().text() + "\n");
 						}
 					}
 				}

@@ -8,7 +8,7 @@ from sklearn.preprocessing import MultiLabelBinarizer
 if __name__ == '__main__':
     # read files
     X_train, y_train = load_svmlight_file("data/train.libsvm", dtype=np.float64, multilabel=True)
-    X_test, y_test = load_svmlight_file("data/test.libsvm", dtype=np.float64, multilabel=True)
+    X_test, y_test = load_svmlight_file("data/CalcSummarySim.libsvm", dtype=np.float64, multilabel=True)
 
     # transform y into a matrix
     mb = MultiLabelBinarizer()
